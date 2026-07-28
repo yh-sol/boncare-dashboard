@@ -9,15 +9,17 @@ async function handleFileUpload(file: File) {
 
   const batchId = crypto.randomUUID()
 
-  // "20260223" 형태의 숫자/문자를 "2026-02-23"로 변환
   function toIsoDate(raw: any): string | null {
     const s = String(raw).trim()
     if (s.length !== 8) return null
     return `${s.slice(0, 4)}-${s.slice(4, 6)}-${s.slice(6, 8)}`
   }
 
+  // 품목코드가 없는 행(합계행 등)은 제외
+  const validRows = rows.filter((row: any) => row['품목코드'])
+
   const { error } = await supabase.from('tb_erp_shipment').insert(
-    rows.map((row: any) => ({
+    validRows.map((row: any) => ({
       upload_batch_id: batchId,
       erp_item_code: row['품목코드'],
       shipment_date: toIsoDate(row['판매일자']),
@@ -25,7 +27,7 @@ async function handleFileUpload(file: File) {
     }))
   )
   if (error) console.error(error)
-  else alert('업로드 완료!')
+  else alert(`업로드 완료! (${validRows.length}건)`)
 }
 
 function UploadExcel() {
