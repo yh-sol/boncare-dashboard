@@ -1,5 +1,6 @@
 import UploadExcel from './UploadExcel'
 import InventoryView from './InventoryView'
+import Dashboard from './Dashboard'
 
 function App() {
   return (
