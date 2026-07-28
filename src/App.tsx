@@ -4,8 +4,12 @@ import Dashboard from './Dashboard'
 
 function App() {
   return (
-    <div className="p-6">
-      <UploadExcel />
+    <div>
+      <Dashboard />
+      <hr />
+      <div className="p-6">
+        <UploadExcel />
+      </div>
       <InventoryView />
     </div>
   )
