@@ -7,13 +7,16 @@ async function handleFileUpload(file: File) {
   const sheet = workbook.Sheets[workbook.SheetNames[0]]
   const rows = XLSX.utils.sheet_to_json(sheet)
 
-const { error } = await supabase.from('tb_erp_shipment').insert(
-  rows.map((row: any) => ({
-    erp_item_code: row['품목코드'],
-    shipment_date: row['출하일자'],
-    qty_pcs: parseInt(String(row['수량']).replace(/,/g, ''), 10),
-  }))
-)
+  const batchId = crypto.randomUUID()   // 이번 업로드 전체를 묶는 고유 ID
+
+  const { error } = await supabase.from('tb_erp_shipment').insert(
+    rows.map((row: any) => ({
+      upload_batch_id: batchId,
+      erp_item_code: row['품목코드'],
+      shipment_date: row['출하일자'],
+      qty_pcs: parseInt(String(row['수량']).replace(/,/g, ''), 10),
+    }))
+  )
   if (error) console.error(error)
   else alert('업로드 완료!')
 }
