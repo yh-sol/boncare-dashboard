@@ -7,13 +7,20 @@ async function handleFileUpload(file: File) {
   const sheet = workbook.Sheets[workbook.SheetNames[0]]
   const rows = XLSX.utils.sheet_to_json(sheet)
 
-  const batchId = crypto.randomUUID()   // 이번 업로드 전체를 묶는 고유 ID
+  const batchId = crypto.randomUUID()
+
+  // "20260223" 형태의 숫자/문자를 "2026-02-23"로 변환
+  function toIsoDate(raw: any): string | null {
+    const s = String(raw).trim()
+    if (s.length !== 8) return null
+    return `${s.slice(0, 4)}-${s.slice(4, 6)}-${s.slice(6, 8)}`
+  }
 
   const { error } = await supabase.from('tb_erp_shipment').insert(
     rows.map((row: any) => ({
       upload_batch_id: batchId,
       erp_item_code: row['품목코드'],
-      shipment_date: row['출하일자'],
+      shipment_date: toIsoDate(row['판매일자']),
       qty_pcs: parseInt(String(row['수량']).replace(/,/g, ''), 10),
     }))
   )
