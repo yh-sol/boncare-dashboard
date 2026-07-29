@@ -5,6 +5,7 @@ import LogisticsCostView from './LogisticsCostView'
 import SkuMapping from './SkuMapping'
 import ShelfLifeRiskBanner from './ShelfLifeRiskBanner'
 import SkuMasterManagement from './SkuMasterManagement'
+import AlertLogView from './AlertLogView'
 
 function App() {
   return (
@@ -22,6 +23,8 @@ function App() {
       <InventoryView />
       <hr />
       <LogisticsCostView />
+      <hr />
+      <AlertLogView />
     </div>
   )
 }

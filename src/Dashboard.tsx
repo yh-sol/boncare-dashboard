@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { supabase } from './supabaseClient'
+import { syncAlertLog } from './alertSync'
 
 type InventoryRow = {
   sku_id: string
@@ -50,6 +51,7 @@ export default function Dashboard() {
     if (error) console.error(error)
     setRows((data as InventoryRow[]) ?? [])
     setLoading(false)
+    syncAlertLog()   // 위험/주의 상태 변화를 알림 로그에 자동 기록
   }
 
   const totalSku = rows.length
