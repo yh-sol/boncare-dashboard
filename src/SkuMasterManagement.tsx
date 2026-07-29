@@ -107,12 +107,12 @@ export default function SkuMasterManagement() {
             placeholder="SKU ID (예: FA200)"
             value={newSku.sku_id ?? ''}
             onChange={(e) => setNewSku({ ...newSku, sku_id: e.target.value })}
-            style={{ padding: '6px', color: '#000', width: '140px' }}
+            style={{ padding: '6px', color: '#000', background: '#fff', width: '140px' }}
           />
           <select
             value={newSku.brand_code}
             onChange={(e) => setNewSku({ ...newSku, brand_code: e.target.value })}
-            style={{ padding: '6px', color: '#000' }}
+            style={{ padding: '6px', color: '#000', background: '#fff' }}
           >
             <option value="J2L">J2L (본케어)</option>
             <option value="J2LFA">J2LFA (본착한생리대)</option>
@@ -121,28 +121,28 @@ export default function SkuMasterManagement() {
             placeholder="SKU명"
             value={newSku.sku_name ?? ''}
             onChange={(e) => setNewSku({ ...newSku, sku_name: e.target.value })}
-            style={{ padding: '6px', color: '#000', width: '220px' }}
+            style={{ padding: '6px', color: '#000', background: '#fff', width: '220px' }}
           />
           <input
             type="number"
             placeholder="입수량"
             value={newSku.pack_qty ?? 1}
             onChange={(e) => setNewSku({ ...newSku, pack_qty: Number(e.target.value) })}
-            style={{ padding: '6px', color: '#000', width: '90px' }}
+            style={{ padding: '6px', color: '#000', background: '#fff', width: '90px' }}
           />
           <input
             type="number"
             placeholder="안전재고(주)"
             value={newSku.safety_stock_weeks ?? 6}
             onChange={(e) => setNewSku({ ...newSku, safety_stock_weeks: Number(e.target.value) })}
-            style={{ padding: '6px', color: '#000', width: '110px' }}
+            style={{ padding: '6px', color: '#000', background: '#fff', width: '110px' }}
           />
           <input
             type="number"
             placeholder="유통기한(개월)"
             value={newSku.shelf_life_months ?? ''}
             onChange={(e) => setNewSku({ ...newSku, shelf_life_months: Number(e.target.value) })}
-            style={{ padding: '6px', color: '#000', width: '110px' }}
+            style={{ padding: '6px', color: '#000', background: '#fff', width: '110px' }}
           />
           <button
             onClick={handleCreate}
@@ -176,7 +176,7 @@ export default function SkuMasterManagement() {
                   type="number"
                   defaultValue={sku.pack_qty}
                   onChange={(e) => updateField(sku.sku_id, 'pack_qty', Number(e.target.value))}
-                  style={{ width: '70px', color: '#000', padding: '2px' }}
+                  style={{ width: '70px', color: '#000', background: '#fff', padding: '2px' }}
                 />
               </td>
               <td className="p-2 border">
@@ -184,7 +184,7 @@ export default function SkuMasterManagement() {
                   type="number"
                   defaultValue={sku.safety_stock_weeks}
                   onChange={(e) => updateField(sku.sku_id, 'safety_stock_weeks', Number(e.target.value))}
-                  style={{ width: '70px', color: '#000', padding: '2px' }}
+                  style={{ width: '70px', color: '#000', background: '#fff', padding: '2px' }}
                 />
               </td>
               <td className="p-2 border">
@@ -192,7 +192,7 @@ export default function SkuMasterManagement() {
                   type="number"
                   defaultValue={sku.shelf_life_months ?? ''}
                   onChange={(e) => updateField(sku.sku_id, 'shelf_life_months', Number(e.target.value))}
-                  style={{ width: '80px', color: '#000', padding: '2px' }}
+                  style={{ width: '80px', color: '#000', background: '#fff', padding: '2px' }}
                 />
               </td>
               <td className="p-2 border">

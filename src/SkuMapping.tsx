@@ -205,7 +205,7 @@ export default function SkuMapping() {
                       onChange={(e) =>
                         setSelection({ ...selection, [item.erp_item_code]: e.target.value })
                       }
-                      style={{ padding: '4px', color: '#000' }}
+                      style={{ padding: '4px', color: '#000', background: '#fff' }}
                     >
                       <option value="">-- 선택 --</option>
                       {skuOptions.map((sku) => (
