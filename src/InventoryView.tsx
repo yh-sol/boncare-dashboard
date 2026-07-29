@@ -12,7 +12,6 @@ type InventoryRow = {
   stock_status: string
 }
 
-// 상태별 배지 스타일 (PRD 2.2절 기준)
 const STATUS_STYLE: Record<string, { label: string; color: string }> = {
   CRITICAL: { label: '🔴 위험', color: '#dc2626' },
   WARNING_1: { label: '🟠 주의-긴급', color: '#ea580c' },
@@ -65,28 +64,28 @@ export default function InventoryView() {
     setLoading(false)
   }
 
-  // 실제 존재하는 창고 목록을 데이터에서 뽑아 탭 구성
   const warehouseCodes = Array.from(new Set(warehouseRows.map((r) => r.warehouse_code)))
   const tabs = ['TOTAL', ...warehouseCodes]
 
-  const displayRows = selectedWarehouse === 'TOTAL' ? totalRows : warehouseRows.filter((r) => r.warehouse_code === selectedWarehouse)
+  const displayRows =
+    selectedWarehouse === 'TOTAL'
+      ? totalRows
+      : warehouseRows.filter((r) => r.warehouse_code === selectedWarehouse)
+
+  if (loading) return <div className="p-6">불러오는 중...</div>
 
   return (
     <div className="p-6">
       <div className="flex items-center justify-between mb-4">
         <h1 className="text-xl font-bold">재고 현황</h1>
         <div>
-          <button
-            onClick={fetchAll}
-            className="text-sm border rounded px-3 py-1"
-          >
+          <button onClick={fetchAll} className="text-sm border rounded px-3 py-1">
             새로고침
           </button>
           <RecalcButton onDone={fetchAll} />
         </div>
       </div>
 
-      {/* 창고 탭 */}
       <div style={{ display: 'flex', gap: '8px', marginBottom: '12px' }}>
         {tabs.map((code) => (
           <button
@@ -99,6 +98,7 @@ export default function InventoryView() {
               background: selectedWarehouse === code ? '#f0f0f0' : 'white',
               fontWeight: selectedWarehouse === code ? 'bold' : 'normal',
               cursor: 'pointer',
+              color: '#000',
             }}
           >
             {code === 'TOTAL' ? '통합' : code}
@@ -106,9 +106,7 @@ export default function InventoryView() {
         ))}
       </div>
 
-      {loading ? (
-        <p>불러오는 중...</p>
-      ) : displayRows.length === 0 ? (
+      {displayRows.length === 0 ? (
         <p style={{ color: '#888' }}>
           표시할 재고 데이터가 없습니다. tb_sku_master / tb_inventory / tb_sku_weekly_stats에 데이터를 입력해주세요.
         </p>
