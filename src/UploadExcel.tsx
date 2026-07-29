@@ -18,10 +18,22 @@ async function handleFileUpload(file: File) {
   const batchId = crypto.randomUUID()
 
   function toIsoDate(raw: any): string | null {
-    const s = String(raw).trim()
-    if (s.length !== 8) return null
+  const s = String(raw).trim()
+
+  // "20260728" 형태 (점/구분자 없는 8자리 숫자)
+  if (/^\d{8}$/.test(s)) {
     return `${s.slice(0, 4)}-${s.slice(4, 6)}-${s.slice(6, 8)}`
   }
+
+  // "2026.07.28" 또는 "2026-07-28" 또는 "2026/07/28" 형태
+  const dotOrDashMatch = s.match(/^(\d{4})[.\-/](\d{1,2})[.\-/](\d{1,2})$/)
+  if (dotOrDashMatch) {
+    const [, y, m, d] = dotOrDashMatch
+    return `${y}-${m.padStart(2, '0')}-${d.padStart(2, '0')}`
+  }
+
+  return null
+}
 
   const { data: mappingData } = await supabase
     .from('tb_erp_mapping')
