@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { supabase } from './supabaseClient'
+import { exportToExcel } from './excelExport'
 
 type CostRow = {
   cost_id: number
@@ -37,6 +38,20 @@ export default function LogisticsCostView() {
     if (error) console.error(error)
     setRows((data as CostRow[]) ?? [])
     setLoading(false)
+  }
+
+
+  function handleDownload() {
+    const exportRows = filteredRows.map((r) => ({
+      정산일: r.settlement_date,
+      운송사: r.operator_name,
+      유형: TYPE_LABEL[r.logistics_type] ?? r.logistics_type,
+      단가기준: r.unit_basis,
+      단가: r.unit_price,
+      수량: r.qty,
+      합계금액: r.total_cost,
+    }))
+    exportToExcel(exportRows, `물류비정산내역_${new Date().toISOString().slice(0, 10)}`)
   }
 
   const operators = Array.from(new Set(rows.map((r) => r.operator_name)))
@@ -117,7 +132,15 @@ export default function LogisticsCostView() {
       </div>
 
       {/* 정산내역 테이블 */}
-      <h2 style={{ fontWeight: 'bold', marginBottom: '8px' }}>정산내역</h2>
+      <div className="flex items-center justify-between" style={{ marginBottom: '8px' }}>
+        <h2 style={{ fontWeight: 'bold' }}>정산내역</h2>
+        <button
+          onClick={handleDownload}
+          style={{ padding: '6px 14px', border: '1px solid #16a34a', color: '#16a34a', borderRadius: '6px' }}
+        >
+          엑셀 다운로드
+        </button>
+      </div>
       {filteredRows.length === 0 ? (
         <p style={{ color: '#888' }}>
           표시할 정산 데이터가 없습니다. tb_logistics_cost 테이블에 데이터를 입력해주세요.

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { supabase } from './supabaseClient'
 import RecalcButton from './RecalcButton'
+import { exportToExcel } from './excelExport'
 
 type InventoryRow = {
   sku_id: string
@@ -72,6 +73,24 @@ export default function InventoryView() {
       ? totalRows
       : warehouseRows.filter((r) => r.warehouse_code === selectedWarehouse)
 
+
+  function handleDownload() {
+    const statusLabel: Record<string, string> = {
+      CRITICAL: '위험', WARNING_1: '주의-긴급', WARNING_2: '주의-일반',
+      WARNING_3: '주의-완화', NORMAL: '정상', NO_DATA: '데이터부족',
+    }
+    const exportRows = displayRows.map((r) => ({
+      SKU: r.sku_id,
+      창고: r.warehouse_code,
+      '물리재고(Pcs)': r.physical_stock_pcs,
+      입고예정: r.incoming_expected_pcs,
+      주평균출고: r.avg_weekly_outbound_pcs ?? '',
+      소진예상주수: r.weeks_remaining ?? '',
+      상태: statusLabel[r.stock_status] ?? r.stock_status,
+    }))
+    exportToExcel(exportRows, `재고현황_${selectedWarehouse}_${new Date().toISOString().slice(0, 10)}`)
+  }
+
   if (loading) return <div className="p-6">불러오는 중...</div>
 
   return (
@@ -83,6 +102,13 @@ export default function InventoryView() {
             새로고침
           </button>
           <RecalcButton onDone={fetchAll} />
+          <button
+            onClick={handleDownload}
+            className="text-sm border rounded px-3 py-1"
+            style={{ marginLeft: '8px', border: '1px solid #16a34a', color: '#16a34a' }}
+          >
+            엑셀 다운로드
+          </button>
         </div>
       </div>
 
