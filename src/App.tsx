@@ -2,6 +2,7 @@ import UploadExcel from './UploadExcel'
 import InventoryView from './InventoryView'
 import Dashboard from './Dashboard'
 import LogisticsCostView from './LogisticsCostView'
+import SkuMapping from './SkuMapping'
 
 function App() {
   return (
@@ -11,6 +12,8 @@ function App() {
       <div className="p-6">
         <UploadExcel />
       </div>
+      <SkuMapping />
+      <hr />
       <InventoryView />
       <hr />
       <LogisticsCostView />

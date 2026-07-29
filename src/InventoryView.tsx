@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { supabase } from './supabaseClient'
+import RecalcButton from './RecalcButton'
 
 type InventoryRow = {
   sku_id: string
@@ -74,12 +75,15 @@ export default function InventoryView() {
     <div className="p-6">
       <div className="flex items-center justify-between mb-4">
         <h1 className="text-xl font-bold">재고 현황</h1>
-        <button
-          onClick={fetchAll}
-          className="text-sm border rounded px-3 py-1"
-        >
-          새로고침
-        </button>
+        <div>
+          <button
+            onClick={fetchAll}
+            className="text-sm border rounded px-3 py-1"
+          >
+            새로고침
+          </button>
+          <RecalcButton onDone={fetchAll} />
+        </div>
       </div>
 
       {/* 창고 탭 */}
