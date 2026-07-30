@@ -6,6 +6,7 @@ import SkuMapping from './SkuMapping'
 import ShelfLifeRiskBanner from './ShelfLifeRiskBanner'
 import SkuMasterManagement from './SkuMasterManagement'
 import AlertLogView from './AlertLogView'
+import InventoryLotManagement from './InventoryLotManagement'
 
 function App() {
   return (
@@ -19,6 +20,8 @@ function App() {
       <SkuMapping />
       <hr />
       <SkuMasterManagement />
+      <hr />
+      <InventoryLotManagement />
       <hr />
       <InventoryView />
       <hr />
