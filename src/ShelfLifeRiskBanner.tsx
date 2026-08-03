@@ -54,6 +54,7 @@ export default function ShelfLifeRiskBanner() {
     const results: RiskRow[] = []
 
     lotRows?.forEach((lot: any) => {
+      if (!lot.manufacture_date) return   // 제조일자 미상(스냅샷) LOT은 판단 대상에서 제외
       const shelfLifeMonths = shelfLifeMap[lot.sku_id]
       if (!shelfLifeMonths) return
 

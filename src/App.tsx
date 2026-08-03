@@ -7,6 +7,7 @@ import ShelfLifeRiskBanner from './ShelfLifeRiskBanner'
 import SkuMasterManagement from './SkuMasterManagement'
 import AlertLogView from './AlertLogView'
 import InventoryLotManagement from './InventoryLotManagement'
+import CurrentStockSnapshotUpload from './CurrentStockSnapshotUpload'
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
       <hr />
       <div className="p-6">
         <UploadExcel />
+        <CurrentStockSnapshotUpload/>
       </div>
       <SkuMapping />
       <hr />

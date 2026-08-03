@@ -6,7 +6,7 @@ type Lot = {
   sku_id: string
   warehouse_code: string
   lot_number: string | null
-  manufacture_date: string
+  manufacture_date: string | null
   qty_pcs: number
   created_at: string
 }
@@ -180,7 +180,7 @@ export default function InventoryLotManagement() {
                 <td className="p-2 border">{lot.sku_id}</td>
                 <td className="p-2 border">{lot.warehouse_code}</td>
                 <td className="p-2 border">{lot.lot_number ?? '-'}</td>
-                <td className="p-2 border">{lot.manufacture_date}</td>
+                <td className="p-2 border">{lot.manufacture_date ?? '미상(스냅샷)'}</td>
                 <td className="p-2 border">{lot.qty_pcs}</td>
                 <td className="p-2 border">
                   <button
